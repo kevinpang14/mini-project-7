@@ -1,38 +1,69 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getRecentPosts, getPosts, getPostDetail } from "../services/api";
+import {
+  getRecentPosts,
+  getPosts,
+  getPostDetail,
+  subscribe,
+} from "../services/api";
 
 // handle api integration
 // Fetch recent posts
 export const fetchRecentPosts = createAsyncThunk(
   "blogs/fetchRecentPosts",
-  async () => {
-    const response = await getRecentPosts();
-    console.log("recent post response.data: ", response.data);
-    const limitedPosts = response.data.slice(0, 4);
-    console.log("limitedPosts: ", limitedPosts);
-    return limitedPosts;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getRecentPosts();
+      console.log("recent post response.data: ", response.data);
+      const limitedPosts = response.data.slice(0, 4);
+      console.log("limitedPosts: ", limitedPosts);
+      return limitedPosts;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch recent posts.");
+    }
   }
 );
 
 // Fetch posts
 export const fetchPosts = createAsyncThunk(
   "blogs/fetchPosts",
-  async (page = 1) => {
-    const response = await getPosts(page);
-    return response.data;
+  async (page = 1, { rejectWithValue }) => {
+    try {
+      const response = await getPosts(page);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch posts.");
+    }
   }
 );
 
 // Fetch post detail
 export const fetchPostDetail = createAsyncThunk(
   "blogs/fetchPostDetail",
-  async (slug) => {
-    console.log("Fetching post detail for slug:", slug);
-    const response = await getPostDetail(slug);
-    console.log("response post detail: ", response);
-    console.log("response.data: ", response.data);
-    console.log("response.data.results: ", response.data.results);
-    return response.data.results;
+  async (slug, { rejectWithValue }) => {
+    try {
+      console.log("Fetching post detail for slug:", slug);
+      const response = await getPostDetail(slug);
+      console.log("response post detail: ", response);
+      console.log("response.data: ", response.data);
+      console.log("response.data.results: ", response.data.results);
+      return response.data.results;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to fetch post details.");
+    }
+  }
+);
+
+// subscription
+export const subscribeUser = createAsyncThunk(
+  "subscription/subscribeUser",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await subscribe(email);
+      console.log("response.data email: ", response.data);
+      return response.data; // Handle success, and return data
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -48,6 +79,7 @@ const blogsSlice = createSlice({
     postDetail: {},
     status: "idle",
     error: null,
+    message: "",
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -89,6 +121,19 @@ const blogsSlice = createSlice({
       .addCase(fetchPostDetail.rejected, (state, action) => {
         state.status = "failed";
         state.error = `Error fetching post detail: ${action.error.message}`;
+      })
+
+      // Subscription
+      .addCase(subscribeUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(subscribeUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.message = action.payload.message; // Success message from API
+      })
+      .addCase(subscribeUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
       });
   },
 });
