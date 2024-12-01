@@ -12,6 +12,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
 
   return (
     <>
+      {/* SEO Metadata START*/}
       <Helmet>
         <title>Recent Blog Posts</title>
         <meta
@@ -23,8 +24,13 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
           property="og:description"
           content="Stay updated with the latest blog posts."
         />
-        <meta property="og:url" content="" />
+        <meta
+          property="og:url"
+          content="https://kevin-mini-project-7.vercel.app/"
+        />
       </Helmet>
+      {/* SEO Metadata END*/}
+
       <div className=" container mx-auto my-10">
         <h2 className="text-3xl font-semibold mb-4">Recent Blog Posts</h2>
 
