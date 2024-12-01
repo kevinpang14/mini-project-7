@@ -66,7 +66,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
             />
             <div className="pt-4 flex flex-col">
               <p className="text-[#7F56D9]">
-                {posts[0].author} | {posts[0].time}
+                {posts[0].author} • {posts[0].time}
               </p>
               <h3 className="text-lg font-semibold">{posts[0].title}</h3>
 
@@ -100,7 +100,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
               }`}
             >
               <p className="text-[#7F56D9]">
-                {posts[1].author} | {posts[1].time}
+                {posts[1].author} • {posts[1].time}
               </p>
               <h3 className="text-lg font-semibold">{posts[1].title}</h3>
 
@@ -134,7 +134,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
               }`}
             >
               <p className="text-[#7F56D9]">
-                {posts[2].author} | {posts[2].time}
+                {posts[2].author} • {posts[2].time}
               </p>
               <h3 className="text-lg font-semibold">{posts[2].title}</h3>
 
@@ -160,7 +160,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
             />
             <div className="pt-4 flex flex-col">
               <p className="text-[#7F56D9]">
-                {posts[3].author} | {posts[3].time}
+                {posts[3].author} • {posts[3].time}
               </p>
               <h3 className="text-lg font-semibold">{posts[3].title}</h3>
 
