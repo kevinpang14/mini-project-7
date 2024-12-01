@@ -38,10 +38,10 @@ const Posts = ({ posts }) => {
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-lg font-semibold">{post.title}</h3>
-              <p className="text-gray-600">
+              <p className="text-[#7F56D9]">
                 {post.author} | {post.time}
               </p>
+              <h3 className="text-lg font-semibold">{post.title}</h3>
               <p className="text-sm text-gray-500 mb-2">{post.tag}</p>
               <p className="mt-2">
                 {post.desc.length > 100
