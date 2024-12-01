@@ -31,7 +31,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
       </Helmet>
       {/* SEO Metadata END*/}
 
-      <div className=" container mx-auto my-10">
+      <main className=" container mx-auto my-10">
         <h2 className="text-3xl font-semibold mb-4">Recent Blog Posts</h2>
 
         <div
@@ -173,7 +173,7 @@ const RecentPosts = ({ posts, isBlogDetailPage = false }) => {
             </div>
           </Link>
         </div>
-      </div>
+      </main>
     </>
   );
 };
